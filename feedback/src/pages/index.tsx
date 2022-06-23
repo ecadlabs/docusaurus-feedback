@@ -6,6 +6,7 @@ import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 
 import styles from './index.module.css';
+import AddFeedback from '../components/AddFeedback';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -36,6 +37,7 @@ export default function Home(): JSX.Element {
       <main>
         <HomepageFeatures />
       </main>
+      <AddFeedback location={window.location.href} />
     </Layout>
   );
 }
