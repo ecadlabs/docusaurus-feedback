@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import React from "react";
 import {
