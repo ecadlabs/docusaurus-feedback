@@ -16,7 +16,6 @@ interface IProps {
   location?: string;
 }
 interface IState {
-  location: string;
   visible: boolean;
 }
 
@@ -25,7 +24,6 @@ class AddFeedback extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       visible: true,
-      location: props.location,
     };
   }
 

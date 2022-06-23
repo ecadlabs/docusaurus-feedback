@@ -39,7 +39,7 @@ export default function Home(): JSX.Element {
       <main>
         <HomepageFeatures />
       </main>
-      <AddFeedback location={window.location.href} />
+      <AddFeedback />
     </Layout>
   );
 }
