@@ -1,16 +1,9 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import { db } from "../../firebase";
+import { db } from "../firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import React from "react";
-import {
-  Alert,
-  Button,
-  ButtonGroup,
-  Col,
-  Container,
-  Row,
-} from "react-bootstrap";
 import { BiHappyBeaming, BiMeh, BiSad } from "react-icons/bi";
+import ReactGA from "react-ga";
+import "@site/src/theme/feedback.css";
 
 interface IProps {
   location?: string;
@@ -18,6 +11,8 @@ interface IProps {
 interface IState {
   visible: boolean;
 }
+const trackingId = "UA-93014135-3";
+ReactGA.initialize(trackingId);
 
 class AddFeedback extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -34,6 +29,11 @@ class AddFeedback extends React.Component<IProps, IState> {
         request: window.location.href,
         timestamp: Timestamp.now(),
       });
+      ReactGA.event({
+        category: "FEEDBACK",
+        action: rating,
+        label: rating,
+      });
       this.setState({ visible: false });
     } catch (err) {
       alert(err);
@@ -46,46 +46,44 @@ class AddFeedback extends React.Component<IProps, IState> {
   render() {
     if (this.state.visible === true) {
       return (
-        <Container>
-          <Alert>
-            <Row>
-              <Col className="text-center">
+        <div className="container margin-top--lg padding--none">
+          <div className="alert alert--primary" role="alert">
+            <div className="row">
+              <div className="col text--center">
                 Please provide feedback on this article:
-              </Col>
-              <Col className="text-center">
-                <ButtonGroup size="lg" className="">
-                  <Button
-                    className="btn-danger"
-                    onClick={() => this.handleSubmit(0)}
-                  >
-                    <BiSad />
-                    <span className="p-2">BAD</span>
-                  </Button>
-                  <Button
-                    className="btn-primary"
-                    onClick={() => this.handleSubmit(1)}
-                  >
-                    <BiMeh />
-                    <span className="p-2">AVERAGE</span>
-                  </Button>
-                  <Button
-                    className="btn-success"
-                    onClick={() => this.handleSubmit(2)}
-                  >
-                    <BiHappyBeaming />
-                    <span className="p-2">GOOD</span>
-                  </Button>
-                </ButtonGroup>
-              </Col>
-            </Row>
-          </Alert>
-        </Container>
+                <button
+                  className="button button--outline button--danger  margin--sm"
+                  onClick={() => this.handleSubmit(0)}
+                >
+                  <BiSad />
+                  <span className="padding--md">BAD</span>
+                </button>
+                <button
+                  className="button button--outline button--warning  margin--sm"
+                  onClick={() => this.handleSubmit(1)}
+                >
+                  <BiMeh />
+                  <span className="padding--md">AVERAGE</span>
+                </button>
+                <button
+                  className="button button--outline button--success  margin--sm"
+                  onClick={() => this.handleSubmit(2)}
+                >
+                  <BiHappyBeaming />
+                  <span className="padding--md">GOOD</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       );
     } else {
       return (
-        <Container>
-          <Alert className="text-center">Thank you for the feedback!</Alert>
-        </Container>
+        <div className="container margin-top--lg padding--none text--center">
+          <div className="alert alert--primary" role="alert">
+            Thank you for the feedback!
+          </div>
+        </div>
       );
     }
   }
