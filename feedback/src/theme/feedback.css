@@ -10,7 +10,7 @@
 }
 .button:hover{
     transform: rotate(45deg);
-    color:black;
+    color:rgb(54, 235, 244);
 }
 .good{
     color:rgb(33, 175, 144);
@@ -20,4 +20,9 @@
 }
 .bad{
     color:rgb(240, 78, 110);
+}
+
+.alert{
+    height:auto;
+    transition: all .6s;
 }
