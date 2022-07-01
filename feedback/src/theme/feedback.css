@@ -4,3 +4,20 @@
     border: 1px solid #fafafa;
     color: black;*/
 }
+.button{
+ border: none !important;
+ transition: all .4s;
+}
+.button:hover{
+    transform: rotate(45deg);
+    color:black;
+}
+.good{
+    color:rgb(33, 175, 144);
+}
+.average{
+    color: rgb(252, 175, 23);
+}
+.bad{
+    color:rgb(240, 78, 110);
+}

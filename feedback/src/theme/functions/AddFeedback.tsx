@@ -11,8 +11,14 @@ interface IProps {
 interface IState {
   visible: boolean;
 }
+
+//------------------------------------------------------------//
+//--- Change this if you want a different tracking account ---//
+//------------------------------------------------------------//
 const trackingId = "UA-93014135-3";
 ReactGA.initialize(trackingId);
+//------------------------------------------------------------//
+//------------------------------------------------------------//
 
 class AddFeedback extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -52,25 +58,22 @@ class AddFeedback extends React.Component<IProps, IState> {
               <div className="col text--center">
                 Please provide feedback on this article:
                 <button
-                  className="button button--outline button--danger  margin--sm"
-                  onClick={() => this.handleSubmit(0)}
-                >
-                  <BiSad />
-                  <span className="padding--md">BAD</span>
-                </button>
-                <button
-                  className="button button--outline button--warning  margin--sm"
-                  onClick={() => this.handleSubmit(1)}
-                >
-                  <BiMeh />
-                  <span className="padding--md">AVERAGE</span>
-                </button>
-                <button
-                  className="button button--outline button--success  margin--sm"
+                  className="button  margin--sm good"
                   onClick={() => this.handleSubmit(2)}
                 >
-                  <BiHappyBeaming />
-                  <span className="padding--md">GOOD</span>
+                  <BiHappyBeaming size={40} />
+                </button>
+                <button
+                  className="button margin--sm average"
+                  onClick={() => this.handleSubmit(1)}
+                >
+                  <BiMeh size={40} />
+                </button>
+                <button
+                  className="button  margin--sm bad"
+                  onClick={() => this.handleSubmit(0)}
+                >
+                  <BiSad size={40} />
                 </button>
               </div>
             </div>
