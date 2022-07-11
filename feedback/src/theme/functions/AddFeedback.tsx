@@ -10,6 +10,7 @@ interface IProps {
 }
 interface IState {
   visible: boolean;
+  fixed: boolean;
 }
 
 //------------------------------------------------------------//
@@ -25,9 +26,11 @@ class AddFeedback extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       visible: true,
+      fixed: false,
     };
+    console.log(props);
   }
-
+  details() {}
   async handleSubmit(rating) {
     try {
       await addDoc(collection(db, "ratings"), {
@@ -85,6 +88,12 @@ class AddFeedback extends React.Component<IProps, IState> {
         <div className="container margin-top--lg padding--none text--center">
           <div className="alert alert--primary" role="alert">
             Thank you for the feedback!
+            <button
+              className="button  margin--sm bad"
+              onClick={() => this.details()}
+            >
+              Leave detailed feedback
+            </button>
           </div>
         </div>
       );
