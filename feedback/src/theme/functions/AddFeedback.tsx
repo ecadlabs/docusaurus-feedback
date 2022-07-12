@@ -139,7 +139,7 @@ class AddFeedback extends React.Component<IProps, IState> {
                   <input
                     className="section-input"
                     disabled
-                    value={this.state.section}
+                    value={this.state.section ? this.state.section : ""}
                     placeholder="Please choose a section above"
                   />
                   <textarea
