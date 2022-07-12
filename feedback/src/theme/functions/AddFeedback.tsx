@@ -11,6 +11,10 @@ interface IProps {
 interface IState {
   visible: boolean;
   fixed: boolean;
+  modal: boolean;
+  content: any;
+  section?: string;
+  feedback?: string;
 }
 
 //------------------------------------------------------------//
@@ -27,10 +31,12 @@ class AddFeedback extends React.Component<IProps, IState> {
     this.state = {
       visible: true,
       fixed: false,
+      modal: false,
+      content: props,
     };
     console.log(props);
   }
-  details() {}
+
   async handleSubmit(rating) {
     try {
       await addDoc(collection(db, "ratings"), {
@@ -39,11 +45,31 @@ class AddFeedback extends React.Component<IProps, IState> {
         timestamp: Timestamp.now(),
       });
       ReactGA.event({
-        category: "FEEDBACK",
+        category: "RATINGS",
         action: rating,
         label: rating,
       });
       this.setState({ visible: false });
+    } catch (err) {
+      alert(err);
+    }
+  }
+
+  async handleDetailedSubmit() {
+    try {
+      await addDoc(collection(db, "feedback"), {
+        section: this.state.section,
+        feedback: this.state.feedback,
+        request: window.location.href,
+        timestamp: Timestamp.now(),
+      });
+      ReactGA.event({
+        category: "FEEDBACK",
+        action: this.state.section,
+        label: this.state.feedback,
+      });
+      this.setState({ visible: false });
+      window.scrollTo(0, document.body.scrollHeight);
     } catch (err) {
       alert(err);
     }
@@ -55,47 +81,103 @@ class AddFeedback extends React.Component<IProps, IState> {
   render() {
     if (this.state.visible === true) {
       return (
-        <div className="container margin-top--lg padding--none">
-          <div className="alert alert--primary" role="alert">
-            <div className="row">
-              <div className="col text--center">
-                Please provide feedback on this article:
-                <button
-                  className="button  margin--sm good"
-                  onClick={() => this.handleSubmit(2)}
-                >
-                  <BiHappyBeaming size={40} />
-                </button>
-                <button
-                  className="button margin--sm average"
-                  onClick={() => this.handleSubmit(1)}
-                >
-                  <BiMeh size={40} />
-                </button>
-                <button
-                  className="button  margin--sm bad"
-                  onClick={() => this.handleSubmit(0)}
-                >
-                  <BiSad size={40} />
-                </button>
+        <>
+          <div className="container margin-top--lg padding--none">
+            <div className="alert alert--primary" role="alert">
+              <div className="row">
+                <div className="col text--center">
+                  Please provide feedback on this article:
+                  <button
+                    className="button  margin--sm good"
+                    onClick={() => this.handleSubmit(2)}
+                  >
+                    <BiHappyBeaming size={40} />
+                  </button>
+                  <button
+                    className="button margin--sm average"
+                    onClick={() => this.handleSubmit(1)}
+                  >
+                    <BiMeh size={40} />
+                  </button>
+                  <button
+                    className="button  margin--sm bad"
+                    onClick={() => this.handleSubmit(0)}
+                  >
+                    <BiSad size={40} />
+                  </button>
+                  <button
+                    className="btn button--outline button--primary margin--sm"
+                    onClick={() => this.setState({ modal: true })}
+                  >
+                    Leave detailed feedback
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          <div className={`fullscreen ${this.state.modal ? "show" : "hide"}`}>
+            <div className="card-demo">
+              <div className="card">
+                <div className="card__header">
+                  <h3>Provide detailed feedback</h3>
+                </div>
+                <div className="card__body">
+                  <h5>Choose section</h5>
+                  <ul>
+                    {this.state.content.content.toc.map((toc, index) => (
+                      <li key={index.toString()}>
+                        <a
+                          href={`#${toc.id}`}
+                          onClick={() => this.setState({ section: toc.id })}
+                        >
+                          {toc.id}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <input
+                    className="section-input"
+                    disabled
+                    value={this.state.section}
+                    placeholder="Please choose a section above"
+                  />
+                  <textarea
+                    rows={10}
+                    placeholder="Please enter your feedback for this section"
+                    onChange={(e) =>
+                      this.setState({ feedback: e.target.value })
+                    }
+                  ></textarea>
+                </div>
+                <div className="card__footer">
+                  <button
+                    className="btn button--primary button--block"
+                    onClick={() => this.handleDetailedSubmit()}
+                  >
+                    Submit feedback
+                  </button>
+                  <button
+                    className="btn button--secondary button--block margin-top--sm"
+                    onClick={() => this.setState({ modal: false })}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
       );
     } else {
       return (
-        <div className="container margin-top--lg padding--none text--center">
-          <div className="alert alert--primary" role="alert">
-            Thank you for the feedback!
-            <button
-              className="button  margin--sm bad"
-              onClick={() => this.details()}
-            >
-              Leave detailed feedback
-            </button>
+        <>
+          <div className="container margin-top--lg padding--none text--center">
+            <div className="alert alert--primary" role="alert">
+              Thank you for the feedback!
+            </div>
           </div>
-        </div>
+        </>
       );
     }
   }
