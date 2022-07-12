@@ -29,8 +29,9 @@
 }
 
 .fullscreen{
-    display: block;
+    /*display: block;*/
     position: fixed;
+    overflow-y: scroll;
     width:100vw;
     height:100vh;
     top:0;
@@ -40,20 +41,26 @@
     padding: 50px;
 }
 .show{
-    display: block;
+    display: inline-block;
 }
 .hide{
     display: none;
 }
 .card-demo{
-    position: absolute;
-    right:20px;
-    bottom:20px;
+    position: relative;
+    width:100%;
+    max-width: 500px;
+    margin-right:20px;
+    margin-left: auto; 
+    margin-top: auto; 
+    margin-bottom:20px;
+    
 }
 .section-input{
     width: 100%;
     border-radius: 5px;
-    margin-bottom: 10px;;
+    margin-bottom: 10px;
+    padding:5px;
 }
 .btn {
     background-color: var(--ifm-button-background-color);
@@ -77,4 +84,5 @@
 textarea{
     width: 100%;
     border-radius: 5px;
+    padding:5px;
 }

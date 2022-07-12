@@ -65,7 +65,7 @@ class AddFeedback extends React.Component<IProps, IState> {
       });
       ReactGA.event({
         category: "FEEDBACK",
-        action: this.state.section,
+        action: this.state.section + ":" + this.state.feedback,
         label: this.state.feedback,
       });
       this.setState({ visible: false });
