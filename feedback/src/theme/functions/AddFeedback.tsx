@@ -122,19 +122,67 @@ class AddFeedback extends React.Component<IProps, IState> {
                   <h3>Provide detailed feedback</h3>
                 </div>
                 <div className="card__body">
-                  <h5>Choose section</h5>
-                  <ul>
-                    {this.state.content.content.toc.map((toc, index) => (
-                      <li key={index.toString()}>
-                        <a
-                          href={`#${toc.id}`}
-                          onClick={() => this.setState({ section: toc.id })}
-                        >
-                          {toc.id}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="radio">
+                    <label>
+                      <input
+                        type="radio"
+                        id="productfeedback"
+                        name="type"
+                        value="TaqueriaProductFeedback "
+                        onClick={() =>
+                          this.setState({
+                            section: "Taqueria Product Feedback",
+                          })
+                        }
+                      />
+                      Taqueria Product Feedback
+                    </label>
+                  </div>
+                  <div className="radio">
+                    <label>
+                      <input
+                        type="radio"
+                        id="docs"
+                        name="type"
+                        value="DocumentationFeedback"
+                        onClick={() =>
+                          this.setState({ section: "Documentation Feedback" })
+                        }
+                      />
+                      Documentation Feedback
+                    </label>
+                  </div>
+                  <div className="radio">
+                    <label>
+                      <input
+                        type="radio"
+                        id="bug"
+                        name="type"
+                        value="ReportaProductBug"
+                        onClick={() =>
+                          this.setState({ section: "Report a Product Bug" })
+                        }
+                      />
+                      Report a Product Bug
+                    </label>
+                  </div>
+                  <div className="radio">
+                    <label>
+                      <input
+                        type="radio"
+                        id="docbug"
+                        name="type"
+                        value="ReportaDocumentationBug"
+                        onClick={() =>
+                          this.setState({
+                            section: "Report a Documentation Bug",
+                          })
+                        }
+                      />
+                      Report a Documentation Bug
+                    </label>
+                  </div>
+                  <br />
 
                   <input
                     className="section-input"
